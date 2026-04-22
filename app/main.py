@@ -5,7 +5,7 @@ from fastapi import FastAPI
 # (por isso aquele nosso __init__.py na pasta models é vital)
 import app.models
 from app.api.dependencies import engine
-from app.api.routers import pacientes
+from app.api.routers import pacientes, responsaveis
 from app.models.base import Base
 
 Base.metadata.create_all(bind=engine)
@@ -19,6 +19,7 @@ app = FastAPI(
 
 # Registra os nossos Controllers (Routers)
 app.include_router(pacientes.router)
+app.include_router(responsaveis.router)
 
 
 @app.get("/", tags=["Health Check"])
