@@ -3,6 +3,6 @@ sqlalchemy
 pydantic
 fastapi
 pyjwt
-pwdlib
+pwdlib[argon2]
 python-multipart
 starlette

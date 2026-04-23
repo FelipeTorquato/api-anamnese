@@ -9,7 +9,7 @@ from app.services import paciente_service
 from app.models import Usuario
 
 # Cria o grupo de rotas com um prefixo unificado
-router = APIRouter(prefix="/pacientes", tags=["Gestão de Pacientes"])
+router = APIRouter(prefix="/pacientes", tags=["Gestão de Pacientes"], dependencies=[Depends(get_current_user)])
 
 
 @router.post(
