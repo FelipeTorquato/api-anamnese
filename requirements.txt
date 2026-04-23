@@ -2,3 +2,7 @@
 sqlalchemy
 pydantic
 fastapi
+pyjwt
+pwdlib
+python-multipart
+starlette
