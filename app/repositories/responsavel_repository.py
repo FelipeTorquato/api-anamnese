@@ -39,6 +39,6 @@ class ResponsavelRepository:
         return responsavel
 
     @staticmethod
-    def excluir(db: Session, responsavel=Responsavel) -> None:
+    def excluir(db: Session, responsavel : Responsavel) -> None:
         responsavel.deleted_at = datetime.now(timezone.utc)
         db.commit()
