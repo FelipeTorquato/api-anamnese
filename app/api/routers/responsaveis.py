@@ -1,11 +1,12 @@
 from fastapi import APIRouter, status, Depends, Response
 from sqlalchemy.orm import Session
 
+from app.api.dependencies import get_current_user
 from app.api.dependencies import get_db
 from app.schemas.responsavel import ResponsavelResponse, ResponsavelCreate, ResponsavelUpdate
 from app.services import responsavel_service
 
-router = APIRouter(prefix="/responsaveis", tags=["Responsáveis"])
+router = APIRouter(prefix="/responsaveis", tags=["Responsáveis"], dependencies=[Depends(get_current_user)])
 
 
 @router.post("/", response_model=ResponsavelResponse, status_code=status.HTTP_201_CREATED)
