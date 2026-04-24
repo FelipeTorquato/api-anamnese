@@ -16,11 +16,11 @@ class AgendaCreate(AgendaBase):
     paciente_id: int
     terapeuta_id: int
 
-    @model_validator(mode='after')
-    def validar_horarios(self) -> 'AgendaCreate':
-        if self.data_hora_fim <= self.data_hora_inicio:
-            raise ValueError("O horário de fim deve ser posterior ao horário de início.")
-        return self
+    # @model_validator(mode='after')
+    # def validar_horarios(self) -> 'AgendaCreate':
+    #     if self.data_hora_fim <= self.data_hora_inicio:
+    #         raise ValueError("O horário de fim deve ser posterior ao horário de início.")
+    #     return self
 
 
 class AgendaResponse(AgendaBase):
