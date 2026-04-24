@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.models import Paciente
 from app.repositories.paciente_repository import PacienteRepository
 from app.repositories.responsavel_repository import ResponsavelRepository
+from app.repositories.terapeuta_repository import TerapeutaRepository
 from app.schemas.paciente import PacienteCreate
 
 
@@ -32,3 +33,20 @@ def criar_paciente(db: Session, paciente_in: PacienteCreate) -> Paciente:
 
 def listar_pacientes(db: Session, skip: int = 0, limit: int = 100) -> List[Paciente]:
     return PacienteRepository.listar(db, skip, limit)
+
+
+def vincular_terapeutas(db: Session, paciente_id: int, terapeutas_id: List[int]) -> Paciente:
+    paciente = PacienteRepository.buscar_por_id(db, paciente_id)
+    if not paciente:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Paciente não encontrado")
+
+    terapeutas = TerapeutaRepository.buscar_por_ids(db, terapeutas_id)
+    if not terapeutas or len(terapeutas) != len(terapeutas_id):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail="Um ou mais terapeutas informados não foram encontrados no sistema.")
+
+    for terapeuta in terapeutas:
+        if terapeuta not in paciente.terapeutas:
+            paciente.terapeutas.append(terapeuta)
+
+    return PacienteRepository.atualizar(db, paciente)

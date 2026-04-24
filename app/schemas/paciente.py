@@ -29,7 +29,11 @@ class PacienteResponse(PacienteBase):
 
     model_config = ConfigDict(from_attributes=True)
 
-class PacienteDetalhadoResponse(PacienteResponse):
 
+class PacienteDetalhadoResponse(PacienteResponse):
     terapeutas: List[TerapeutaResponse] = []
     # responsaveis: List[ResponsavelResponse] = []
+
+
+class PacienteVincularTerapeutas(BaseModel):
+    terapeutas_ids: List[int] = Field(..., min_length=1, description="Lista de IDs dos terapeutas a serem vinculados")
