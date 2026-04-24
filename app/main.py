@@ -4,6 +4,7 @@ from fastapi import FastAPI
 # IMPORTANTE: Você precisa importar todos os models antes de rodar isso
 # (por isso aquele nosso __init__.py na pasta models é vital)
 import app.models
+from app.api.routers import prontuarios
 from app.api.dependencies import engine
 from app.api.routers import agendas
 from app.api.routers import auth
@@ -28,6 +29,7 @@ app.include_router(auth.router)
 app.include_router(usuarios.router)
 app.include_router(terapeutas.router)
 app.include_router(agendas.router)
+app.include_router(prontuarios.router)
 
 
 @app.get("/", tags=["Health Check"])
