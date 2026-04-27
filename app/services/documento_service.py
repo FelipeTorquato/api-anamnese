@@ -53,11 +53,13 @@ def listar_documentos_paciente(db: Session, paciente_id: int) -> list[Documento]
 def obter_caminho_download(db: Session, paciente_id: int, documento_id: int) -> str:
     documento = DocumentoRepository.buscar_por_id_e_paciente(db, documento_id=documento_id, paciente_id=paciente_id)
 
-    if not documento:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Documento não encontrado para este paciente")
+    caminho_fisico = os.path.join(UPLOAD_DIR, documento.caminho_arquivo)
 
-    if not os.path.exists(documento.caminho_arquivo):
+    # if not documento:
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Documento não encontrado para este paciente")
+
+    if not os.path.exists(caminho_fisico):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail="Arquivo do documento não encontrado no servidor")
 
-    return documento.caminho_arquivo
+    return caminho_fisico
