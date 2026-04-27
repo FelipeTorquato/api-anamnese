@@ -12,9 +12,9 @@ from app.api.routers import pacientes, responsaveis
 from app.api.routers import prontuarios
 from app.api.routers import terapeutas
 from app.api.routers import usuarios
-from app.models.base import Base
+# from app.models.base import Base
 
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
 
 # Inicializa a aplicação
 app = FastAPI(
