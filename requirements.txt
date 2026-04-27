@@ -7,3 +7,6 @@ pwdlib[argon2]
 python-multipart
 starlette
 uliweb-alembic
+uvicorn
+alembic
+psycopg2-binary

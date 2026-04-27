@@ -1,0 +1,33 @@
+
+services:
+  db:
+    image: postgres:18.0-alpine
+    container_name: clinica_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin_password
+      POSTGRES_DB: clinica_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Garante que os dados não se perdem se o banco reiniciar
+
+  api:
+    build: .
+    container_name: clinica_api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      # Passamos a URL do banco de dados como variável de ambiente!
+      # Formato: postgresql://usuario:senha@host:porta/banco_de_dados
+      DATABASE_URL: postgresql://admin:admin_password@db:5432/clinica_db
+    depends_on:
+      - db
+    volumes:
+      # Mapeia a pasta de uploads do seu PC para o contentor (não perder PDFs no reinício)
+      - ./uploads:/app/uploads
+
+volumes:
+  postgres_data:
