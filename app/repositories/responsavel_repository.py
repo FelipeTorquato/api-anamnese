@@ -23,7 +23,7 @@ class ResponsavelRepository:
 
     @staticmethod
     def listar(db: Session, skip: int = 0, limit: int = 100) -> List[Responsavel]:
-        return db.query(Responsavel).offset(skip).limit(limit).filter(Responsavel.deleted_at.is_(None)).all()
+        return db.query(Responsavel).filter(Responsavel.deleted_at.is_(None)).offset(skip).limit(limit).all()
 
     @staticmethod
     def criar(db: Session, responsavel: Responsavel) -> Responsavel:

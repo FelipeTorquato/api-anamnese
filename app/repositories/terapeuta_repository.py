@@ -23,7 +23,7 @@ class TerapeutaRepository:
 
     @staticmethod
     def listar(db: Session, skip: int = 0, limit: int = 100) -> List[Terapeuta]:
-        return db.query(Terapeuta).offset(skip).limit(limit).filter(Terapeuta.deleted_at.is_(None)).all()
+        return db.query(Terapeuta).filter(Terapeuta.deleted_at.is_(None)).offset(skip).limit(limit).all()
 
     @staticmethod
     def criar(db: Session, terapeuta: Terapeuta) -> Terapeuta:

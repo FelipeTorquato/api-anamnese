@@ -26,6 +26,7 @@ services:
     depends_on:
       - db
     volumes:
+      - .:/app
       # Mapeia a pasta de uploads do seu PC para o contentor (não perder PDFs no reinício)
       - ./uploads:/app/uploads
 
