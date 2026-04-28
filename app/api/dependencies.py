@@ -1,4 +1,3 @@
-import os
 from typing import Generator
 
 import jwt
@@ -7,16 +6,14 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 
-from app.core.security import SECRET_KEY, ALGORITHM
+from app.core.config import settings
 from app.models import Usuario
 from app.repositories.usuario_repository import UsuarioRepository
 
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./clinica.db")
-
-if SQLALCHEMY_DATABASE_URL.startswith("sqlite"):
-    engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+if settings.DATABASE_URL.startswith("sqlite"):
+    engine = create_engine(settings.DATABASE_URL, connect_args={"check_same_thread": False})
 else:
-    engine = create_engine(SQLALCHEMY_DATABASE_URL)
+    engine = create_engine(settings.DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -40,7 +37,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     )
 
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         email: str = payload.get("sub")
         if email is None:
             raise credentials_exception

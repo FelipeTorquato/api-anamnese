@@ -2,6 +2,7 @@
 sqlalchemy
 pydantic
 pydantic[email]
+pydantic-settings
 fastapi
 pyjwt
 pwdlib[argon2]
